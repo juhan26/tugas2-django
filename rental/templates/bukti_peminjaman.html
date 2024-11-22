@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Bukti Peminjaman{% endblock %}
+
+{% block content %}
+<h1>Bukti Peminjaman</h1>
+
+<p>Terima kasih, {{ peminjaman.nama_peminjam }}! Peminjaman motor Anda berhasil.</p>
+
+<h3>Detail Peminjaman:</h3>
+<ul>
+    <li><strong>Motor:</strong> {{ motor.nama }}</li>
+    <li><strong>Tanggal Pinjam:</strong> {{ peminjaman.tanggal_pinjam }}</li>
+    <li><strong>Tanggal Kembali:</strong> {{ peminjaman.tanggal_kembali }}</li>
+    <li><strong>Jumlah Bayar:</strong> Rp{{ peminjaman.jumlah_bayar|floatformat:0 }}</li>
+    <li><strong>Status:</strong> {{ peminjaman.status }}</li>
+    <!-- <li><strong>Sudah Bayar:</strong> {% if peminjaman.sudah_bayar %}Ya{% else %}Tidak{% endif %}</li> -->
+</ul>
+
+<a href="{% url 'peminjaman' %}">
+    <button>Ke Daftar Peminjaman</button>
+</a>
+
+{% endblock %}

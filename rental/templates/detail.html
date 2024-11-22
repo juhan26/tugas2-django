@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail Motor - {{ motor.nama }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-3">  Detail Motor - {{ motor.nama }}</h2>
+    <div class="row g-5">
+        <div class="col-md-6 card p-4">
+            <div class="detail-info">
+                <img src="{{ motor.gambar.url }}" alt="{{ motor.nama }}" class="detail-image img-fluid mb-4">
+                <h1 class="">{{ motor.nama }}</h1>
+                <p class="detail-description">{{ motor.deskripsi }}</p>
+                <p class="detail-price">Harga per hari: Rp{{ motor.harga_per_hari|floatformat:0 }}</p>
+                <p class="detail-stock">Stok: {{ motor.stok }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="detail-form">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="nik" class="form-label">NIK</label>
+                        <input type="text" class="form-control" name="nik" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nama_peminjam" class="form-label">Nama Peminjam</label>
+                        <input type="text" class="form-control" name="nama_peminjam" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tanggal_pinjam" class="form-label">Tanggal Pinjam</label>
+                        <input type="date" class="form-control" name="tanggal_pinjam" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tanggal_kembali" class="form-label">Tanggal Kembali</label>
+                        <input type="date" class="form-control" name="tanggal_kembali" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-25">Pesan Motor</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Peminjaman - Rental Motor{% endblock %}
+
+{% block content %}
+<h1>Daftar Peminjaman Motor</h1>
+
+<table class="peminjaman-table">
+    <thead>
+        <tr>
+            <th>NIK</th>
+            <th>Nama Peminjam</th>
+            <th>Motor</th>
+            <th>Tanggal Pinjam</th>
+            <th>Tanggal Kembali</th>
+            <th>Status</th>
+            <th>Jumlah Bayar</th>
+            <th>Bayar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for peminjaman in peminjamans %}
+        <tr>
+            <td>{{ peminjaman.nik }}</td>
+            <td>{{ peminjaman.nama_peminjam }}</td>
+            <td>{{ peminjaman.motor.nama }}</td>
+            <td>{{ peminjaman.tanggal_pinjam }}</td>
+            <td>{{ peminjaman.tanggal_kembali }}</td>
+            <td>
+                {% if peminjaman.status == 'Dikembalikan' %}
+                    <span class="text-danger">DIKEMBALIKAN</span>
+                {% elif peminjaman.status == 'Dipinjam' %}
+                    <span class="text-success">DIPINJAM</span>
+                {% else %}
+                    <span class="text-warning">DIPESAN</span>
+                {% endif %}
+            </td>
+            
+            <td>Rp{{ peminjaman.jumlah_bayar|floatformat:0 }}</td>
+            <td>
+                {% if peminjaman.sudah_bayar %}
+                    {% if peminjaman.status == 'Dipinjam' %}
+                        <form action="{% url 'update_sudah_bayar' peminjaman.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Kembalikan</button>
+                        </form>
+                    {% else %}
+                        <span class="text-normal">Sudah Lunas</span>
+                    {% endif %}
+                {% else %}
+                    <form action="{% url 'update_sudah_bayar' peminjaman.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Bayar</button>
+                    </form>
+                {% endif %}
+            </td>            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

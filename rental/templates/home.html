@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Rental Motor{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Daftar Motor</h1>
+<div class="d-flex justify-content-center mb-4">
+    <form method="GET" action="{% url 'home' %}"> 
+        <div class="d-flex w-auto">
+            <input type="text" name="search" placeholder="Cari motor..." class="form-control me-3" style="max-width: 300px;">
+        </div>
+        
+    </form>
+</div>
+
+<div class="motor-cards">
+    <div class="container">
+        {% for motor in motors %}
+        <div class="motor-card">
+            <img src="{{ motor.gambar.url }}" alt="{{ motor.nama }}" class="motor-image">
+            <div class="motor-details">
+                <h3>{{ motor.nama }}</h3>
+                <p>Harga: Rp{{ motor.harga_per_hari|floatformat:0 }}/hari</p>
+                <a href="{% url 'motor_detail' motor.id %}" class="btn-detail">Lihat Detail</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
